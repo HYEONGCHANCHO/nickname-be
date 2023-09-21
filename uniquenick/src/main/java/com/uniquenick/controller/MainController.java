@@ -77,7 +77,8 @@ public class MainController {
 
         List<Map<String, Object>> responseList = new ArrayList<>();
 
-        for (int i = 1; i <= 5; i=i+11) {
+        for (int i = 1; i <= 5; i=i+1) {
+
             PostsDetailResponseDTO postDetails = postService.postDetail(i);
             PostsDetailBestCommentDTO postsDetailBestCommentDTO = postService.postDetailBestComment(i);
             PostsDetailCommentDTO postsDetailCommentDTO = postService.postDetailComment(i);
