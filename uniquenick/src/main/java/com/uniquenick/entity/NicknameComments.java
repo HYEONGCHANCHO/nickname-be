@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+//@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "NicknameComments")
@@ -32,5 +32,12 @@ public class NicknameComments extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postId")
     private NicknamePosts nicknamePosts;
+
+    public NicknameComments(String CommentContent, Long commentLikeCount, boolean commentStatus, NicknamePosts nicknamePosts){
+        this.commentContent = CommentContent;
+        this.commentLikeCount = commentLikeCount;
+        this.commentStatus = commentStatus;
+        this.nicknamePosts = nicknamePosts;
+    }
 
 }
