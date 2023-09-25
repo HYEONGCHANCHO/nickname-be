@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class MainController {
+@RequestMapping("/posts")
+public class PostsController {
     @Autowired
     PostService postService;
     @GetMapping("/postCount")
@@ -31,17 +32,17 @@ public class MainController {
         response.put("trendingComments", trendingComments);
         return ResponseEntity.ok(response);
     }
-    @PostMapping("/posts")
+    @PostMapping("/createPosts")
     public ResponseEntity<PostsCreateResponseDTO> createPost(@RequestBody PostsCreateRequestDTO request) {
         PostsCreateResponseDTO response = postService.createPost(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    @PostMapping("/posts/{postId}/comments")
+    @PostMapping("/{postId}/comments")
     public ResponseEntity<CommentCreateResponseDTO> createPostComment(@PathVariable("postId") Integer postId, @RequestParam String comment) {
         CommentCreateResponseDTO response = postService.createComments(postId, comment);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    @PostMapping("/posts/{postId}/comments/likeUp/{commentId}")
+    @PostMapping("/{postId}/comments/likeUp/{commentId}")
     public ResponseEntity<Map<String, Long>> postCommentLikeCountUp(@PathVariable("postId") Integer postId,@PathVariable("commentId") Long commentId) {
 
        long commentLikeCount = postService.commentLikeCountUp(postId, commentId);
@@ -49,7 +50,7 @@ public class MainController {
        response.put("commentLikeCount", commentLikeCount);
         return ResponseEntity.ok(response);
     }
-    @PostMapping("/posts/{postId}/comments/likeDown/{commentId}")
+    @PostMapping("/{postId}/comments/likeDown/{commentId}")
     public ResponseEntity<Map<String, Long>> postCommentLikeCountDown(@PathVariable("postId") Integer postId,@PathVariable("commentId") Long commentId) {
 
        long commentLikeCount = postService.commentLikeCountDown(postId, commentId);
@@ -57,7 +58,7 @@ public class MainController {
        response.put("commentLikeCount", commentLikeCount);
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/{postId}")
     public ResponseEntity<Map<String, Object>> getPostDetail(@PathVariable("postId") Integer postId){
 
         PostsDetailResponseDTO postDetails=postService.postDetail(postId);
@@ -72,12 +73,12 @@ public class MainController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/posts/recentPosts")
+    @GetMapping("/recentPosts")
     public ResponseEntity<List<Map<String, Object>>> getRecentPost(){
 
         List<Map<String, Object>> responseList = new ArrayList<>();
 
-        for (int i = 1; i <= 5; i=i+11) {
+        for (int i = 1; i <= 5; i=i+1) {
             PostsDetailResponseDTO postDetails = postService.postDetail(i);
             PostsDetailBestCommentDTO postsDetailBestCommentDTO = postService.postDetailBestComment(i);
             PostsDetailCommentDTO postsDetailCommentDTO = postService.postDetailComment(i);
@@ -94,7 +95,7 @@ public class MainController {
         return ResponseEntity.ok(responseList);
     }
 
-    @GetMapping("/posts/{postId}/nextPosts")
+    @GetMapping("/{postId}/nextPosts")
     public ResponseEntity<List<Map<String, Object>>> getNextRecentPost(@PathVariable("postId") Integer postId){
 
         List<Map<String, Object>> responseList = new ArrayList<>();
