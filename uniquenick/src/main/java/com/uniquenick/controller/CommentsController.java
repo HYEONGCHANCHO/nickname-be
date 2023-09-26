@@ -20,6 +20,7 @@ public class CommentsController {
     PostService postService;
 
     @GetMapping("/trendingComments")
+
     public ResponseEntity<Map<String, String[]>> getTrendingComments() {
         String[] trendingComments = postService.getTrendingComments();
         Map<String, String[]> response = new HashMap<>();
