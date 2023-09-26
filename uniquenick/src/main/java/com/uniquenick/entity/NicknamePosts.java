@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -39,6 +40,11 @@ public class NicknamePosts extends BaseTimeEntity {
 
     @Column(name = "commentCount")
     private Long commentCount;
+
+    @OneToMany(mappedBy = "NicknamePosts")
+    private List<NicknameComments> nicknameCommentsList;
+
+
 
     public NicknamePosts(String postWhere, String postTags, String postDetails, boolean postPublic, boolean postStatus, Long commentCount) {
         this.postWhere = postWhere;
