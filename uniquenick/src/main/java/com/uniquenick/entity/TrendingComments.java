@@ -2,10 +2,7 @@ package com.uniquenick.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder  //    10.4. 수정사항 - 필요한 코드 추가.
+//@Setter //    10.4. 수정사항 - 불필요한 코드 주석처리.
+//@NoArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
+//@AllArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
 @Table(name = "TrendingComments")
 public class TrendingComments extends BaseTimeEntity {
 

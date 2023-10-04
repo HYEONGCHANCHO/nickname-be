@@ -2,19 +2,17 @@ package com.uniquenick.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Getter
-//@Setter
-@NoArgsConstructor
-//@AllArgsConstructor
+@Builder //    10.4. 수정사항 - 필요한 코드 추가.
+//@Setter //    10.4. 수정사항 - 불필요한 코드 주석처리.
+//@NoArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
+//@AllArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
 @Table(name = "NicknamePosts")
 public class NicknamePosts extends BaseTimeEntity {
 
@@ -45,13 +43,14 @@ public class NicknamePosts extends BaseTimeEntity {
     private List<NicknameComments> nicknameCommentsList;
 
 
+//    10.4. 수정사항 - 불필요한 코드 주석처리.
 
-    public NicknamePosts(String postWhere, String postTags, String postDetails, boolean postPublic, boolean postStatus, Long commentCount) {
-        this.postWhere = postWhere;
-        this.postTags = postTags;
-        this.postDetails = postDetails;
-        this.postPublic = postPublic;
-        this.postStatus = postStatus;
-        this.commentCount = commentCount;
-    }
+//    public NicknamePosts(String postWhere, String postTags, String postDetails, boolean postPublic, boolean postStatus, Long commentCount) {
+//        this.postWhere = postWhere;
+//        this.postTags = postTags;
+//        this.postDetails = postDetails;
+//        this.postPublic = postPublic;
+//        this.postStatus = postStatus;
+//        this.commentCount = commentCount;
+//    }
 }
