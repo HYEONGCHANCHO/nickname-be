@@ -1,17 +1,15 @@
 package com.uniquenick.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-//@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder //    10.4. 수정사항 - 필요한 코드 추가.
+//@Setter //    10.4. 수정사항 - 불필요한 코드 주석처리.
+//@NoArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
+//@AllArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
 @Table(name = "NicknameComments")
 public class NicknameComments extends BaseTimeEntity {
 
@@ -33,11 +31,12 @@ public class NicknameComments extends BaseTimeEntity {
     @JoinColumn(name = "postId")
     private NicknamePosts nicknamePosts;
 
-    public NicknameComments(String CommentContent, Long commentLikeCount, boolean commentStatus, NicknamePosts nicknamePosts){
-        this.commentContent = CommentContent;
-        this.commentLikeCount = commentLikeCount;
-        this.commentStatus = commentStatus;
-        this.nicknamePosts = nicknamePosts;
-    }
+    //    10.4. 수정사항 - 불필요한 코드 주석처리.
+//    public NicknameComments(String CommentContent, Long commentLikeCount, boolean commentStatus, NicknamePosts nicknamePosts){
+//        this.commentContent = CommentContent;
+//        this.commentLikeCount = commentLikeCount;
+//        this.commentStatus = commentStatus;
+//        this.nicknamePosts = nicknamePosts;
+//    }
 
 }
