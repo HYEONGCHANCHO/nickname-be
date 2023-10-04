@@ -19,13 +19,15 @@ public class CommentsController {
     @Autowired
     PostService postService;
 
-    @GetMapping("/comments/trendingComments")
+    @GetMapping("/trendingComments")
+
     public ResponseEntity<Map<String, String[]>> getTrendingComments() {
         String[] trendingComments = postService.getTrendingComments();
         Map<String, String[]> response = new HashMap<>();
         response.put("trendingComments", trendingComments);
         return ResponseEntity.ok(response);
     }
+
 
 
 }

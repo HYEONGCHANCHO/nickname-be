@@ -15,16 +15,23 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/posts")
+<<<<<<< HEAD
+
+=======
+>>>>>>> RB1.0
 public class PostsController {
     @Autowired
     PostService postService;
-    @GetMapping("/postCount")
+    @GetMapping("/postsCount")
     public ResponseEntity<Map<String, Long>> getPostCount() {
         long postCount = postService.countPosts();
         Map<String, Long> response = new HashMap<>();
         response.put("postCount", postCount);
         return ResponseEntity.ok(response);
     }
+<<<<<<< HEAD
+
+=======
     @GetMapping("/comments/trendingComments")
     public ResponseEntity<Map<String, String[]>> getTrendingComments() {
         String[] trendingComments = postService.getTrendingComments();
@@ -32,6 +39,7 @@ public class PostsController {
         response.put("trendingComments", trendingComments);
         return ResponseEntity.ok(response);
     }
+>>>>>>> RB1.0
     @PostMapping("/createPosts")
     public ResponseEntity<PostsCreateResponseDTO> createPost(@RequestBody PostsCreateRequestDTO request) {
         PostsCreateResponseDTO response = postService.createPost(request);
@@ -79,6 +87,10 @@ public class PostsController {
         List<Map<String, Object>> responseList = new ArrayList<>();
 
         for (int i = 1; i <= 5; i=i+1) {
+<<<<<<< HEAD
+
+=======
+>>>>>>> RB1.0
             PostsDetailResponseDTO postDetails = postService.postDetail(i);
             PostsDetailBestCommentDTO postsDetailBestCommentDTO = postService.postDetailBestComment(i);
             PostsDetailCommentDTO postsDetailCommentDTO = postService.postDetailComment(i);
