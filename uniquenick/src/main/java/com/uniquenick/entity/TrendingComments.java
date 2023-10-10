@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -20,6 +17,7 @@ public class TrendingComments extends BaseTimeEntity {
 
     @Id
     @Column(name = "trendingCommentsId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer trendingCommentsId;
 
     @Column(name = "trendingComments", columnDefinition = "JSON")
