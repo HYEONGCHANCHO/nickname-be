@@ -61,7 +61,9 @@ public class PostServiceImpl implements PostService {
 
         String postTagsJson = javaObjectService.convertJavaObjectToJson(request.getPostTags());
         String postDetailsJson = javaObjectService.convertJavaObjectToJson(request.getPostDetails());
-        NicknamePosts nicknamePosts = new NicknamePosts(request.getPostWhere(), postTagsJson, postDetailsJson, request.isPostPublic(), request.isPostStatus(),0L);
+        NicknamePosts nicknamePosts = NicknamePosts.builder().postWhere(request.getPostWhere()).postTags(postTagsJson).postDetails(postDetailsJson).postPublic(request.isPostPublic()).postStatus(request.isPostStatus()).commentCount(0L).build(); //10.14 수정
+
+//        NicknamePosts nicknamePosts = new NicknamePosts(request.getPostWhere(), postTagsJson, postDetailsJson, request.isPostPublic(), request.isPostStatus(),0L); 10.14 수정
         nicknamePosts = nicknamePostsRepository.save(nicknamePosts);
         PostsCreateResponseDTO response = new PostsCreateResponseDTO();
         response.setPostId(nicknamePosts.getPostId());
@@ -72,25 +74,43 @@ public class PostServiceImpl implements PostService {
     @Override
     public void clearAndCreateTrendingComments() {
         trendingCommentsRepository.deleteAll();
+        String[] testTrendData = {"TrendingComment1", "TrendingComment2", "TrendingComment3"};
 
-        TrendingComments trendingComments1 = new TrendingComments();
-        trendingComments1.setTrendingCommentsId(1);
-        trendingComments1.setTrendingComments(new String[]{"test1", "test2", "test3", "test4", "test5"}); //재밌는 말뭉치 임의로 생성
-        trendingCommentsRepository.save(trendingComments1);
+        TrendingComments trendingComments = TrendingComments.builder().build(); //재밌는 말뭉치 임의로 생성
+        trendingComments.setTrendingComments(testTrendData);
+
+
+//        TrendingComments trendingComments1 = new TrendingComments();
+//        trendingComments1.setTrendingCommentsId(1);
+//        trendingComments1.setTrendingComments(new String[]{"test1", "test2", "test3", "test4", "test5"}); //재밌는 말뭉치 임의로 생성
+        trendingCommentsRepository.save(trendingComments);
     }
 
     @Override
     @Transactional
     public CommentCreateResponseDTO createComments(Integer postId, String comment) {
-        NicknameComments nicknameComments = new NicknameComments();
-        nicknameComments.setCommentContent(comment);
-        nicknameComments.setCommentLikeCount(0L); //일단 초기 좋아요 0
-        nicknameComments.setCommentStatus(true); //일단 무조건 true로
+        long firstLikeCount = 0L;//일단 초기 좋아요
+        boolean firstCommentStatus = true;
+        NicknameComments nicknameComments = NicknameComments.builder().commentContent(comment).commentLikeCount(firstLikeCount).commentStatus(firstCommentStatus).build();
         // 게시물 아이디를 이용하여 게시물 객체를 조회하여 설정
         NicknamePosts post = nicknamePostsRepository.findByPostId(postId);
         if (post != null) {
-            nicknameComments.setNicknamePosts(post);
+            NicknameComments.builder().nicknamePosts(post).build();
+//            nicknameComments.
+//                    setNicknamePosts(post);
         }
+
+
+//        NicknameComments nicknameComments = new NicknameComments();
+//        nicknameComments.setCommentContent(comment);
+//        nicknameComments.setCommentLikeCount(0L); //일단 초기 좋아요 0
+//        nicknameComments.setCommentStatus(true); //일단 무조건 true로
+//        // 게시물 아이디를 이용하여 게시물 객체를 조회하여 설정
+//        NicknamePosts post = nicknamePostsRepository.findByPostId(postId);
+//        if (post != null) {
+//            nicknameComments.setNicknamePosts(post);
+//        }
+
         nicknameCommentsRepository.save(nicknameComments);
         CommentCreateResponseDTO response = new CommentCreateResponseDTO();
         response.setCommentId(nicknameComments.getNicknameCommentsId());
@@ -103,10 +123,11 @@ public class PostServiceImpl implements PostService {
     public Long commentLikeCountUp(Integer postId, Long commentId) {
         Optional<NicknameComments> nicknameComments = nicknameCommentsRepository.findByNicknamePostsPostIdAndNicknameCommentsId(postId, commentId);
         if (nicknameComments.isPresent()) {
-            NicknameComments nicknameComment = nicknameComments.get();
+            NicknameComments nicknameComment = nicknameComments.get();  //optional값이 존재할 경우 값 호출
             Long ChangedCount = nicknameComment.getCommentLikeCount() + 1;
-            nicknameComment.setCommentLikeCount(ChangedCount);
-            nicknameCommentsRepository.save(nicknameComment);
+            NicknameComments updateNicknameComment = NicknameComments.builder().commentLikeCount(ChangedCount).build();
+
+            nicknameCommentsRepository.save(updateNicknameComment);
             return ChangedCount;
         }
         return null;
@@ -120,8 +141,9 @@ public class PostServiceImpl implements PostService {
             Long presentCount = nicknameComment.getCommentLikeCount();
             if (presentCount > 0) {
                 Long ChangedCount = presentCount - 1;
-                nicknameComment.setCommentLikeCount(ChangedCount);
-                nicknameCommentsRepository.save(nicknameComment);
+                NicknameComments updateNicknameComment = NicknameComments.builder().commentLikeCount(ChangedCount).build();
+
+                nicknameCommentsRepository.save(updateNicknameComment);
                 return ChangedCount;
             }
             return presentCount;
