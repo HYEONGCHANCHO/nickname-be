@@ -11,8 +11,8 @@ import java.util.List;
 @Getter
 @Builder //    10.4. 수정사항 - 필요한 코드 추가.
 //@Setter //    10.4. 수정사항 - 불필요한 코드 주석처리.
-//@NoArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
-//@AllArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "NicknamePosts")
 public class NicknamePosts extends BaseTimeEntity {
 
@@ -39,7 +39,7 @@ public class NicknamePosts extends BaseTimeEntity {
     @Column(name = "commentCount")
     private Long commentCount;
 
-    @OneToMany(mappedBy = "NicknamePosts")
+    @OneToMany(mappedBy = "nicknamePosts")
     private List<NicknameComments> nicknameCommentsList;
 
 
