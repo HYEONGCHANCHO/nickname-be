@@ -226,10 +226,10 @@ public class PostServiceImpl implements PostService {
 
 
 
-    public List<NicknamePostDTO> getLatestPublicPosts(int n) {
-        List<NicknamePosts> posts = nicknamePostsRepository.findTopNByPostPublicTrueAndPostStatusTrueOrderByDateUpdatedDesc(n);
-        return convertToDTOs(posts);
-    }
+//    public List<NicknamePostDTO> getLatestPublicPosts(int n) {
+//        List<NicknamePosts> posts = nicknamePostsRepository.findTopNByPostPublicTrueAndPostStatusTrueOrderByDateUpdatedDesc(n);
+//        return convertToDTOs(posts);
+//    }
 
     // 다른 메서드들...
 

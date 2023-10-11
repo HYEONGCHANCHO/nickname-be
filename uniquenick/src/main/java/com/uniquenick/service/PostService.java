@@ -17,5 +17,5 @@ public interface PostService {
     PostsDetailBestCommentDTO postDetailBestComment(Integer postId);
     PostsDetailCommentDTO postDetailComment(Integer postId);
 
-    public List<NicknamePostDTO> getLatestPublicPosts(int n);
+//    public List<NicknamePostDTO> getLatestPublicPosts(int n);
 }
