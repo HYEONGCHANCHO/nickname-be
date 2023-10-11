@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Getter
 @Builder //    10.4. 수정사항 - 필요한 코드 추가.
 //@Setter //    10.4. 수정사항 - 불필요한 코드 주석처리.
-//@NoArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
-//@AllArgsConstructor //    10.4. 수정사항 - 불필요한 코드 주석처리.
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "NicknameComments")
 public class NicknameComments extends BaseTimeEntity {
 

@@ -10,6 +10,6 @@ import java.util.List;
 public interface NicknamePostsRepository extends JpaRepository<NicknamePosts,Integer> {
     NicknamePosts findByPostId(Integer postId);
 
-    List<NicknamePosts> findTopNByPostPublicTrueAndPostStatusTrueOrderByDateUpdatedDesc(int n);
+//    List<NicknamePosts> findTopNByPostPublicTrueAndPostStatusTrueOrderByDateUpdatedDesc(Integer n);
 
 }
