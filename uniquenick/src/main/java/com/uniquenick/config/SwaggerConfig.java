@@ -25,7 +25,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Uniqname API")
+                .title("Uniquenick API")
                 .description("SwaggerConfig")
                 .version("3.0")
                 .build();
