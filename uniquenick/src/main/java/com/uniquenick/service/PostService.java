@@ -5,7 +5,7 @@ import com.uniquenick.dto.*;
 import java.util.List;
 
 public interface PostService {
-    Integer countPosts();
+    Long countPosts();
     PostsCreateResponseDTO createPost(PostsCreateRequestDTO request);
     String[] getTrendingComments();
     void deleteALl();
