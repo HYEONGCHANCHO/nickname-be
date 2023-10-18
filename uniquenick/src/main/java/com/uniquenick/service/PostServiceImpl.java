@@ -38,8 +38,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Integer countPosts() {
-        return (int) nicknamePostsRepository.count();
+    public Long countPosts() {
+        return nicknamePostsRepository.count();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
         NicknamePosts nicknamePosts = NicknamePosts.builder().postWhere(request.getPostWhere()).postTags(postTagsJson).postDetails(postDetailsJson).postPublic(request.isPostPublic()).postStatus(request.isPostStatus()).commentCount(0L).build(); //10.14 수정
 
 //        NicknamePosts nicknamePosts = new NicknamePosts(request.getPostWhere(), postTagsJson, postDetailsJson, request.isPostPublic(), request.isPostStatus(),0L); 10.14 수정
-        nicknamePosts = nicknamePostsRepository.save(nicknamePosts);
+        nicknamePostsRepository.save(nicknamePosts);
         PostsCreateResponseDTO response = new PostsCreateResponseDTO();
         response.setPostId(nicknamePosts.getPostId());
         response.setDateCreated(nicknamePosts.getDateCreated());
