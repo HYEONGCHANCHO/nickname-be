@@ -39,28 +39,44 @@ public class PostServiceTest {
 //        this.nicknameCommentsRepository = nicknameCommentsRepository;
 //    }
 
-//    @BeforeEach
-//    void cleardb(){
-//        nicknamePostsRepository.deleteAll();
-//
-//    }
-
-    @BeforeEach
-    @Transactional
-    void cleardb() {
-        nicknamePostsRepository.deleteAll();
-    }
 
     @Test
     @Transactional
-
     void countPostsTest(){
 
+        boolean defaultPublic = true;
+        boolean defaultStatus = true;
+        Long defaultCommentCount = 0L;
+        List<String> testTagList1 = List.of("test tag1","test tag2");
+        List<String> testDetailList1 = List.of("test detail1","test detail2");
+
+        String postTagsJson1 = javaObjectService.convertJavaObjectToJson(testTagList1);
+        String postDetailsJson1 = javaObjectService.convertJavaObjectToJson(testDetailList1);
+        NicknamePosts nicknamePosts1 = NicknamePosts.builder().postWhere("test postwhere").postTags(postTagsJson1).postDetails(postDetailsJson1).postPublic(defaultPublic).postStatus(defaultStatus).commentCount(defaultCommentCount).build();
+
+        nicknamePostsRepository.save(nicknamePosts1);
+
         long countPost = nicknamePostsRepository.count();
-        createPostTest();
+
+        List<String> testTagList2 = List.of("test tag1","test tag2");
+        List<String> testDetailList2 = List.of("test detail1","test detail2");
+
+        String postTagsJson2 = javaObjectService.convertJavaObjectToJson(testTagList2);
+        String postDetailsJson2 = javaObjectService.convertJavaObjectToJson(testDetailList2);
+        NicknamePosts nicknamePosts2 = NicknamePosts.builder().postWhere("test postwhere").postTags(postTagsJson2).postDetails(postDetailsJson2).postPublic(defaultPublic).postStatus(defaultStatus).commentCount(defaultCommentCount).build();
+
+        nicknamePostsRepository.save(nicknamePosts2);
+
         long AfterCountPost = nicknamePostsRepository.count();
 
-        Assertions.assertEquals(AfterCountPost, countPost);
+        Assertions.assertEquals(AfterCountPost, countPost+1);
+
+        nicknamePostsRepository.deleteById(nicknamePosts1.getPostId());
+        nicknamePostsRepository.deleteById(nicknamePosts2.getPostId());
+
+        long DeleteCountPost = nicknamePostsRepository.count();
+
+        Assertions.assertEquals(0, DeleteCountPost);
 
     }
 
@@ -85,8 +101,7 @@ public class PostServiceTest {
         response.setPostId(nicknamePosts.getPostId());
         response.setDateCreated(nicknamePosts.getDateCreated());
 
-
-//        nicknamePostsRepository.deleteById(nicknamePosts.getPostId());
+        nicknamePostsRepository.deleteById(nicknamePosts.getPostId());
     }
 
 
