@@ -37,12 +37,62 @@ _나 대신 고민해줄 친구를 구합니다!_
 - 닉네임을 랜덤으로 추천해주는 서비스는 많지만 **'나'에 대해 아는 사람이 지어주는 닉네임은 더 특별**하지 않을까요?
 
 ## 화면 구성도
+- 디자이너 - FE -BE 팀원이 각자의 관점에서 논의를 하며 페이지 구성
 
 ![](https://hackmd.io/_uploads/ryLRi1PO2.png)
 
 ## ERD
 
+
 ![](https://hackmd.io/_uploads/S1LCvkvO2.jpg)
+
+* [DB설계에 대한 복기글(기록링크)](https://velog.io/@gkiwi/%ED%85%8C%EC%98%A4%EC%9D%98-%EC%8A%A4%ED%94%84%EB%A6%B0%ED%8A%B8-15%EA%B8%B0-%EC%B0%B8%EA%B0%80-%ED%9A%8C%EA%B3%A0%EB%A1%9D-Day4-Day5)
+
+- 컬럼별 입력될 데이터의 크기를 고려하여 DB용량 설계
+- DB에서 데이터의 완전한 삭제 대신 NICKNAMESTATUS컬럼의 값 변경으로 기능 수행 및 데이터 보존
+- RESTFUl API 중심 설계, 변수명 및 반환형태, 데이터 크기 정의
+- 추후 추가될 로그인 기능을 고려하며 테이블 설계
+- Oracle DB에서 MySql DB로 수정하여 Ubuntu를 통해 배포
+- (현재는 배포 중단)
+  
+ ### 리팩토링 내용
+
+- 테이블 PK를 UUID에서 AUTOINCREMENT로 수정
+    
+     * [분산환경, 보안과 성능의 비교 및 결과(기록링크)](https://developerkiwi.tistory.com/entry/MySql-AutoINCREMENT-vs-UUID-%EC%9E%A5%EB%8B%A8%EC%A0%90-%EB%B9%84%EA%B5%90-%EB%B0%8F-%EA%B2%B0%EA%B3%BC)
+    
+- UUID와 대비되는 AUTOINCREMENT의 특징 비교 
+    
+    - AUTOINCREMENT의 단점 : 분산 환경에서 중복 데이터가 생길 가능성, 보안상 문제가 생길 여지가 있다.
+    - AUTOINCREMENT의 장점 : 편의성과 성능면에서 UUID를 사용하는 방식보다 우위에 있다.
+    
+- AUTOINCREMENT 방식 채택이유 : 
+    
+    - 해당 프로젝트는 단일 DB를 사용하며 보안에 민감한 데이터를 다루지 않는 환경이다.
+    - 편의성과 성능을 고려하여 기존의 UUID에서 AUTOINCREMENT로 수정하였다.
+ 
+- Entitiy Class에서 @Setter 제거 및 @Builder 수정
+    
+    * [어노테이션 수정작업 기록1(@NoArgsConstructer 등 기록링크)](https://developerkiwi.tistory.com/entry/Java-fieldLombok-NoArgsConstructor-RequiredArgsConstructor-AllArgsConstructor-등-개념-정리)
+    
+    * [어노테이션 수정작업 기록2(@Builder 패턴 등 기록링크)](https://developerkiwi.tistory.com/entry/Java-빌더패턴-Builder-Pattern-Builder-사용권장-setter지양이유-Lombok)
+    
+    
+- @Setter의 문제점    
+    - Entity 클래스의 인스턴스가 수정될 수 있다.
+    - 이러한 변경 가능성으로 인해 예측불가능성이 생겨 협업에서 어려움을 유발할 수 있다.
+    - 클래스의 내부 구현이 외부에 노출될 수도 있다.
+    
+- 문제 수정 과정 : @Builder를 사용하면 클래스를 불변객체로 유지하며 필요한 기능을 구현할 수 있다.
+  1. JPA를 사용할 때 기본생성자를 필요로 하는데 @Builder만 사용해서는 기본생성자를 만들 수 없다는 문제 발생.
+  2. @NoArgsConstructor와 @AllArgsConstructor를 같이 사용하여 기본 생성자를 만들어줄 수 있음.
+  3. 이를 그대로 사용하면 @Setter를 사용할 때처럼 외부에서 변경할 수 있어 일관성에 문제가 생길 수 있음.
+  4. 각각의 뒤에 (access = AccessLevel.PROTECTED)를 붙이면 기본생성자를 제외한 모든 필드의 생성자가 외부에서 호출되지 않게 된다.
+
+- 리팩토링 결론
+    - @Setter 사용은 일관성 및 여러 문제점이 있기 때문에 사용을 지양한다.
+    - 대신 @Builder를 사용하고 JPA 사용을 위하여 기본 생성자가 필요할 경우 @NoArgsConstructor(access = AccessLevel.PROTECTED)와 @AllArgsConstructor(access = AccessLevel.PROTECTED)를 같이 사용하여 외부에서 호출되지 않는 생성자를 만든다.
+  
 
 ## 그라운드 룰
 
