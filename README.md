@@ -82,23 +82,24 @@ src
 - Oracle DB에서 MySql DB로 수정하여 Ubuntu를 통해 배포
 - (현재는 배포 중단)
 
- ### API
+## API
+
 ```
 @RestController
 @RequestMapping("/posts")
-
-*전체 포스트 제공 (GET /postcount)
-*트랜드 이름 제공 (GET /comments/trendingComments)
-*게시글 생성 (POST /createPosts)
-*댓글 생성 (POST /{postId}/comments)
-*댓글 좋아요 추가 (POST /{postId}/comments/likeup/{commentId})
-*댓글 좋아요 해제 (POST /{postId}/comments/likeDown/{commentId})
-*게시글 상세 내용(댓글 포함) (GET /{postId})
-*요구사항 내용 제공 (GET /recentPosts)
-*요구사항 내용 추가 제공 (POST /{postId}/nextPosts)
 ```
 
-  ### 환경변수 내용
+- 전체 포스트 제공 ```(GET /postcount)```
+- 트랜드 이름 제공 ```(GET /comments/trendingComments)```
+- 게시글 생성 ```(POST /createPosts)```
+- 댓글 생성 ```(POST /{postId}/comments)```
+- 댓글 좋아요 추가 ```(POST /{postId}/comments/likeup/{commentId})```
+- 댓글 좋아요 해제 ```(POST /{postId}/comments/likeDown/{commentId})```
+- 게시글 상세 내용(댓글 포함) ```(GET /{postId})```
+- 요구사항 내용 제공 ```(GET /recentPosts)```
+- 요구사항 내용 추가 제공 ```(POST /{postId}/nextPosts)```
+
+## 환경변수 내용
 
 ```
 #server setting
@@ -133,7 +134,7 @@ spring.devtools.restart.enabled=true
  
 ```
  
- ### 리팩토링 내용
+## 리팩토링 내용
 
 - 테이블 PK를 UUID에서 AUTOINCREMENT로 수정
     
