@@ -43,7 +43,7 @@ _나 대신 고민해줄 친구를 구합니다!_
 
 ## Project Sturucture
 
-
+```
 src
 ├── config //설정 관련
 │   └── WebMvcConfig
@@ -66,6 +66,7 @@ src
 │   ├── PostService
 │   └── PostServiceImpl
 └── application.properties // 환경변수
+```
 
 ## ERD
 
@@ -82,7 +83,7 @@ src
 - (현재는 배포 중단)
 
  ### API
-
+```
 @RestController
 @RequestMapping("/posts")
 
@@ -95,8 +96,11 @@ src
 *게시글 상세 내용(댓글 포함) (GET /{postId})
 *요구사항 내용 제공 (GET /recentPosts)
 *요구사항 내용 추가 제공 (POST /{postId}/nextPosts)
+```
 
   ### 환경변수 내용
+
+```
 #server setting
 server.port = 3008
 
@@ -127,7 +131,8 @@ spring.thymeleaf.cache=false
 spring.devtools.livereload.enabled=true
 spring.devtools.restart.enabled=true
  
-  
+```
+ 
  ### 리팩토링 내용
 
 - 테이블 PK를 UUID에서 AUTOINCREMENT로 수정
