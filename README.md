@@ -41,6 +41,32 @@ _나 대신 고민해줄 친구를 구합니다!_
 
 ![](https://hackmd.io/_uploads/ryLRi1PO2.png)
 
+## Project Sturucture
+
+
+src
+├── config //설정 관련
+│   └── WebMvcConfig
+├── controller
+│   ├── CommentsCOntroller
+│   └── PostsController
+├── dto
+│   ├── NicknameDTO
+│   ├── PostDTO
+│   └── TrendingCommentsDTO
+├── entity
+│   ├── BaseTimeEntity
+│   ├── NicknamePosts
+│   └── NicknameComments
+├── repository //jpa
+│   ├── NicknamePostsRepository
+│   ├── NicknameCommentsRepository
+│   └── TrendingCommentsRepository
+├── service // 상품 도메인
+│   ├── PostService
+│   └── PostServiceImpl
+└── application.properties // 환경변수
+
 ## ERD
 
 
@@ -54,6 +80,53 @@ _나 대신 고민해줄 친구를 구합니다!_
 - 추후 추가될 로그인 기능을 고려하며 테이블 설계
 - Oracle DB에서 MySql DB로 수정하여 Ubuntu를 통해 배포
 - (현재는 배포 중단)
+
+ ### API
+
+@RestController
+@RequestMapping("/posts")
+
+*전체 포스트 제공 (GET /postcount)
+*트랜드 이름 제공 (GET /comments/trendingComments)
+*게시글 생성 (POST /createPosts)
+*댓글 생성 (POST /{postId}/comments)
+*댓글 좋아요 추가 (POST /{postId}/comments/likeup/{commentId})
+*댓글 좋아요 해제 (POST /{postId}/comments/likeDown/{commentId})
+*게시글 상세 내용(댓글 포함) (GET /{postId})
+*요구사항 내용 제공 (GET /recentPosts)
+*요구사항 내용 추가 제공 (POST /{postId}/nextPosts)
+
+  ### 환경변수 내용
+#server setting
+server.port = 3008
+
+#DB connection
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+
+spring.datasource.url=jdbc:mysql://localhost:3306/teo15?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+spring.datasource.username=
+spring.datasource.password=
+
+spring.jpa.hibernate.ddl-auto=create   // 개발 단계 설정
+#spring.jpa.hibernate.ddl-auto=update  // 개발 단계 설정
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+#swagger setting
+spring.mvc.pathmatch.matching-strategy=ant_path_matcher
+
+
+# thymeleaf
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+spring.thymeleaf.cache=false
+
+#server reload
+spring.devtools.livereload.enabled=true
+spring.devtools.restart.enabled=true
+ 
   
  ### 리팩토링 내용
 
